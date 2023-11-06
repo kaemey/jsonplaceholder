@@ -16,7 +16,6 @@ class jsonplaceholder{
         curl_setopt($ch, CURLOPT_HEADER, false);
         $response = curl_exec($ch);
         curl_close($ch);
-        var_dump($response);
         return $response;
     }
 
@@ -24,10 +23,10 @@ class jsonplaceholder{
 
         $ch = curl_init("https://jsonplaceholder.typicode.com/".$url. http_build_query($params));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postFields));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postFields));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, ['Content-Type: application/json; charset=UTF-8']);
+        curl_setopt($ch, CURLOPT_HEADER, false);
         $response = curl_exec($ch);
         curl_close($ch);
 
@@ -38,10 +37,10 @@ class jsonplaceholder{
 
         $ch = curl_init("https://jsonplaceholder.typicode.com/".$url. http_build_query($params));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postFields));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postFields));
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_HEADER, ['Content-Type: application/json; charset=UTF-8']);
+        curl_setopt($ch, CURLOPT_HEADER, false);
         $response = curl_exec($ch);
         curl_close($ch);
     
@@ -51,7 +50,6 @@ class jsonplaceholder{
     public function delete($url, $params = array()){         
         $ch = curl_init("https://jsonplaceholder.typicode.com/".$url. http_build_query($params));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HEADER, false);
         $response = curl_exec($ch);
@@ -79,11 +77,13 @@ class jsonplaceholder{
 
     public function editPost($id, $postFields){
         $data = $this->put("posts/$id", $postFields);
+        $data = json_decode($data, true);
         return $data;
     }
 
     public function addPost($id, $postFields){
         $data = $this->patch("posts/$id", $postFields);
+        $data = json_decode($data, true);
         return $data;
     }
 
@@ -95,23 +95,30 @@ class jsonplaceholder{
 
 $obj = new jsonplaceholder();
 
-echo 'var_dump($obj->getAllUsers());<br>';
-var_dump($obj->getAllUsers());
-echo "<br>";
-echo "<br>";
-echo 'var_dump($obj->getPostsOfUser(1));<br>';
-var_dump($obj->getPostsOfUser(1));
-echo "<br>";
-echo "<br>";
-echo 'var_dump($obj->getTodosOfUser(1));<br>';
-var_dump($obj->getTodosOfUser(1));
-echo "<br>";
-echo "<br>";
-echo 'var_dump($obj->editPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));<br>';
+echo '<h2>foreach($obj->getAllUsers() as $user)</h2>';
+foreach($obj->getAllUsers() as $user){
+    echo "<p>";
+    var_dump($user);
+    echo "</p>";
+}
+echo '<h2>foreach($obj->getPostsOfUser(1) as $post)</h2>';
+foreach($obj->getPostsOfUser(1) as $post){
+    echo "<p>";
+    var_dump($post);
+    echo "</p>";
+}
+
+echo '<h2>foreach($obj->getTodosOfUser(1) as $todo)</h2>';
+foreach($obj->getTodosOfUser(1) as $todo){
+    echo "<p>";
+    var_dump($todo);
+    echo "</p>";
+}
+echo '<h2>var_dump($obj->editPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));</h2>';
+echo "<p>";
 var_dump($obj->editPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));
-echo "<br>";
-echo "<br>";
-echo 'var_dump($obj->addPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));<br>';
-var_dump($obj->addPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));
-echo "<br>";
-echo "<br>";
+echo "</p>";
+echo "<p>";
+echo '<h2>var_dump($obj->addPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));</h2>';
+var_dump($obj->addPost(1,["id"=>'abc',"title"=>"jsonplaceholder","body"=>"jsonplaceholder","userId"=>1]));
+echo "</p>";
