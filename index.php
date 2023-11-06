@@ -119,6 +119,6 @@ echo "<p>";
 var_dump($obj->editPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));
 echo "</p>";
 echo "<p>";
-echo '<h2>var_dump($obj->addPost(1,["id"=>1,"title"=>"foo","body"=>"bar","userId"=>1]));</h2>';
-var_dump($obj->addPost(1,["id"=>'abc',"title"=>"jsonplaceholder","body"=>"jsonplaceholder","userId"=>1]));
+echo '<h2>var_dump($obj->addPost(1,["id"=>1,"title"=>"jsonplaceholder","body"=>"jsonplaceholder","userId"=>1]));</h2>';
+var_dump($obj->addPost(1,["id"=>'1',"title"=>"jsonplaceholder","body"=>"jsonplaceholder","userId"=>1]));
 echo "</p>";
