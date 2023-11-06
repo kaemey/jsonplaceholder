@@ -5,7 +5,7 @@ class jsonplaceholder{
     private $users;
     private $posts;
 
-    public function get($url, $params = array()){
+    private function get($url, $params = array()){
         // $params = array(
         //     'userId'  => '1',
         // );
@@ -19,7 +19,7 @@ class jsonplaceholder{
         return $response;
     }
 
-    public function put($url, $postFields = array(), $params = array()){
+    private function put($url, $postFields = array(), $params = array()){
 
         $ch = curl_init("https://jsonplaceholder.typicode.com/".$url. http_build_query($params));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
@@ -33,7 +33,7 @@ class jsonplaceholder{
         return $response;
     }
 
-    public function patch($url, $postFields = array(), $params = array()){
+    private function patch($url, $postFields = array(), $params = array()){
 
         $ch = curl_init("https://jsonplaceholder.typicode.com/".$url. http_build_query($params));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
@@ -47,7 +47,7 @@ class jsonplaceholder{
         return $response;
     } 
 
-    public function delete($url, $params = array()){         
+    private function delete($url, $params = array()){         
         $ch = curl_init("https://jsonplaceholder.typicode.com/".$url. http_build_query($params));
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
