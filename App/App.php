@@ -15,12 +15,12 @@ class App{
         //Загрузчик данных, использует Базу данных
         $uploader = new Uploader($db);
 
-        // //Функция для загрузки постов
-        // $uploader->uploadePosts();
-        // //Функция для загрузки комментариев
-        // $uploader->uploadComments();
-        // //Функция для вывода сообщения
-        // $uploader->echoMessage();
+        //Функция для загрузки постов
+        $uploader->uploadePosts();
+        //Функция для загрузки комментариев
+        $uploader->uploadComments();
+        //Функция для вывода сообщения
+        $uploader->echoMessage();
 
         $controller = new IndexController($db);
         $controller->index();
